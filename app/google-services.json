@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "711740760594",
+    "project_id": "hotspot2-a485c",
+    "storage_bucket": "hotspot2-a485c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:711740760594:android:0aa9412d18447f39d2aecb",
+        "android_client_info": {
+          "package_name": "com.example.hotspot20"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "711740760594-s38i10nmatqgsiii6gjki8qu8rkjvpip.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1UPmEr-soP1Lz7NMnTHYYgug-dPUWq-Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "711740760594-s38i10nmatqgsiii6gjki8qu8rkjvpip.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
