@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/my_nav"
-    app:startDestination="@id/registerFragment">
+    app:startDestination="@id/signInFragment">
     <fragment
         android:id="@+id/signInFragment"
         android:name="com.example.hotspot20.views.SignInFragment"
@@ -21,7 +21,11 @@
         android:id="@+id/hotspotFragment"
         android:name="com.example.hotspot20.views.HotspotFragment"
         android:label="fragment_hotspot"
-        tools:layout="@layout/fragment_hotspot" />
+        tools:layout="@layout/fragment_hotspot" >
+        <action
+            android:id="@+id/action_hotspotFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.hotspot20.views.RegisterFragment"
@@ -33,5 +37,19 @@
         <action
             android:id="@+id/action_registerFragment_to_hotspotFragment"
             app:destination="@id/hotspotFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.hotspot20.views.ChatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.hotspot20.views.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
     </fragment>
 </navigation>

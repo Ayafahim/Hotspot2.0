@@ -2,7 +2,7 @@ package com.example.hotspot20.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.example.hotspot20.model.AuthRepository
+import com.example.hotspot20.repositories.AuthRepository
 
 class AuthViewModel(application: Application) : AndroidViewModel(application) {
 

@@ -7,12 +7,18 @@
         <entry key="..\:/Users/Aya Fahim/AndroidStudioProjects/Hotspot20/app/src/main/res/drawable-v24/ic_baseline_email_24.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/Aya Fahim/AndroidStudioProjects/Hotspot20/app/src/main/res/drawable-v24/ic_baseline_vpn_key_24.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/Aya Fahim/AndroidStudioProjects/Hotspot20/app/src/main/res/drawable-v24/login_background.xml" value="0.19166666666666668" />
+        <entry key="..\:/Users/Aya Fahim/AndroidStudioProjects/Hotspot20/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/Aya Fahim/AndroidStudioProjects/Hotspot20/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/Aya Fahim/AndroidStudioProjects/Hotspot20/app/src/main/res/layout/fragment_hotspot.xml" value="0.15353260869565216" />
+        <entry key="..\:/Users/Aya Fahim/AndroidStudioProjects/Hotspot20/app/src/main/res/layout/activity_main2.xml" value="0.1" />
+        <entry key="..\:/Users/Aya Fahim/AndroidStudioProjects/Hotspot20/app/src/main/res/layout/fragment_chat.xml" value="0.1453804347826087" />
+        <entry key="..\:/Users/Aya Fahim/AndroidStudioProjects/Hotspot20/app/src/main/res/layout/fragment_hotspot.xml" value="0.1" />
         <entry key="..\:/Users/Aya Fahim/AndroidStudioProjects/Hotspot20/app/src/main/res/layout/fragment_main.xml" value="0.10960144927536232" />
+        <entry key="..\:/Users/Aya Fahim/AndroidStudioProjects/Hotspot20/app/src/main/res/layout/fragment_profile.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/Aya Fahim/AndroidStudioProjects/Hotspot20/app/src/main/res/layout/fragment_register.xml" value="0.1" />
         <entry key="..\:/Users/Aya Fahim/AndroidStudioProjects/Hotspot20/app/src/main/res/layout/fragment_sign_in.xml" value="0.15353260869565216" />
         <entry key="..\:/Users/Aya Fahim/AndroidStudioProjects/Hotspot20/app/src/main/res/layout/sign_in_fragment.xml" value="0.1" />
+        <entry key="..\:/Users/Aya Fahim/AndroidStudioProjects/Hotspot20/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
+        <entry key="..\:/Users/Aya Fahim/AndroidStudioProjects/Hotspot20/app/src/main/res/menu/settings_menu.xml" value="0.17552083333333332" />
       </map>
     </option>
   </component>

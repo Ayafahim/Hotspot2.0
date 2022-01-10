@@ -1,8 +1,6 @@
-package com.example.hotspot20.model
+package com.example.hotspot20.repositories
 
 import android.app.Application
-import android.content.Intent
-import android.text.TextUtils
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth

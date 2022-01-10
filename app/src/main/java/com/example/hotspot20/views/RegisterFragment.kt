@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -22,6 +23,8 @@ class RegisterFragment : Fragment() {
     var passwordEdit: EditText? = null
     var registerBtn: Button? = null
     var viewModel: AuthViewModel? = null
+    var logInText: TextView? = null
+
 
 
     override fun onCreateView(
@@ -56,6 +59,12 @@ class RegisterFragment : Fragment() {
         emailEdit = view.findViewById(R.id.registerEmail)
         passwordEdit = view.findViewById(R.id.registerPassword)
         registerBtn = view.findViewById(R.id.registerBtn)
+        logInText = view.findViewById(R.id.backFromRegister)
+
+        logInText!!.setOnClickListener {
+            Navigation.findNavController(requireView())
+                .navigate(R.id.action_registerFragment_to_signInFragment)
+        }
 
         registerBtn!!.setOnClickListener {
             var email = emailEdit!!.text.toString().trim()
