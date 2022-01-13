@@ -34,14 +34,13 @@ class SignInFragment : Fragment() {
             this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(requireActivity().application)
         )[AuthViewModel::class.java]
-        viewModel!!.userData.observe(this, object : Observer<FirebaseUser> {
-            override fun onChanged(firebaseUser: FirebaseUser) {
+        viewModel!!.userData.observe(this,
+            { firebaseUser ->
                 if (firebaseUser != null) {
                     Navigation.findNavController(requireView())
                         .navigate(R.id.action_signInFragment_to_hotspotFragment)
                 }
-            }
-        })
+            })
     }
 
     override fun onCreateView(
@@ -74,21 +73,30 @@ class SignInFragment : Fragment() {
         loginBtn!!.setOnClickListener {
             var email = emailEdit!!.text.toString().trim()
             var password = passwordEdit!!.text.toString().trim()
-
+            var succes = false
 
             if (email.isEmpty()) {
                 emailEdit!!.error = "Please enter email"
             }
-            if (password.isEmpty()) {
+            else if (password.isEmpty()) {
                 passwordEdit!!.error = "Please enter a password"
             }
-            if (email.isEmpty() && password.isEmpty()) {
+            else if (email.isEmpty() && password.isEmpty()) {
                 passwordEdit!!.error = "Please enter a password"
                 emailEdit!!.error = "Please enter email"
             } else {
-                viewModel!!.logIn(email, password)
-                Navigation.findNavController(requireView())
-                    .navigate(R.id.action_signInFragment_to_hotspotFragment)
+                viewModel!!.logIn(email,password)
+                viewModel!!.userData.observe(
+                    requireActivity(),
+                    { firebaseUser ->
+                        if (firebaseUser != null) {
+                            succes = true
+                        }
+                    })
+                if (succes){
+                    Navigation.findNavController(requireView())
+                        .navigate(R.id.action_signInFragment_to_hotspotFragment)
+                }
             }
         }
     }

@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.navigation.Navigation
 import com.example.hotspot20.R
 import com.example.hotspot20.model.User
+import com.example.hotspot20.views.SignInFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.ktx.database
@@ -79,7 +80,6 @@ class AuthRepository(application: Application) {
     public fun logIn(email: String, password: String) {
         email.trim()
         password.trim()
-
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -90,7 +90,6 @@ class AuthRepository(application: Application) {
                         Toast.LENGTH_SHORT
                     )
                         .show()
-                    loginSuccess = true
                 } else {
                     Toast.makeText(
                         application,
