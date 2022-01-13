@@ -22,7 +22,8 @@
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:foreground="@drawable/ic_baseline_android_24"/>
 
     <TextView
         android:id="@+id/nameView"

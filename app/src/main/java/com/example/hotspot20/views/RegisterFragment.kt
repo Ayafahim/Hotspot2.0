@@ -74,7 +74,7 @@ class RegisterFragment : Fragment() {
             if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
                 viewModel!!.register(email,password)
                 Navigation.findNavController(requireView())
-                    .navigate(R.id.action_registerFragment_to_hotspotFragment)
+                    .navigate(R.id.action_registerFragment_to_createProfileFragment)
             }
 
         }

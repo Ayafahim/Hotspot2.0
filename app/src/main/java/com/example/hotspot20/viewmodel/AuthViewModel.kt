@@ -2,6 +2,7 @@ package com.example.hotspot20.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import com.example.hotspot20.model.User
 import com.example.hotspot20.repositories.AuthRepository
 
 class AuthViewModel(application: Application) : AndroidViewModel(application) {
@@ -19,6 +20,10 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
     }
     public fun logOut(){
         authRepo.logOut()
+    }
+
+    fun saveUser(user: User){
+        authRepo.saveUser(user)
     }
 
 
