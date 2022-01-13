@@ -26,7 +26,6 @@ class RegisterFragment : Fragment() {
     var logInText: TextView? = null
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -70,9 +69,17 @@ class RegisterFragment : Fragment() {
             var email = emailEdit!!.text.toString().trim()
             var password = passwordEdit!!.text.toString().trim()
 
-
-            if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
-                viewModel!!.register(email,password)
+            if (email.isEmpty()) {
+                emailEdit!!.error = "Please enter email"
+            }
+            if (password.isEmpty()) {
+                passwordEdit!!.error = "Please enter a password"
+            }
+            if (email.isEmpty() && password.isEmpty()) {
+                passwordEdit!!.error = "Please enter a password"
+                emailEdit!!.error = "Please enter email"
+            } else {
+                viewModel!!.register(email, password)
                 Navigation.findNavController(requireView())
                     .navigate(R.id.action_registerFragment_to_createProfileFragment)
             }

@@ -1,6 +1,7 @@
 package com.example.hotspot20.viewmodel
 
 import android.app.Application
+import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import com.example.hotspot20.model.User
 import com.example.hotspot20.repositories.AuthRepository
@@ -12,18 +13,27 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
     var loggedStatus = authRepo.userLoggedMutableLiveData
 
 
-    public fun register(email: String,password : String){
+    fun register(email: String,password : String){
         authRepo.register(email,password)
     }
-    public fun logIn(email: String,password: String){
+    fun logIn(email: String,password: String){
         authRepo.logIn(email,password)
+
     }
-    public fun logOut(){
+    fun logOut(){
         authRepo.logOut()
     }
 
     fun saveUser(user: User){
         authRepo.saveUser(user)
+
+    }
+
+    fun uploadProfilePic(pickedImage: Uri){
+        authRepo.uploadImage(pickedImage)
+    }
+    fun resetPassword(email: String){
+        authRepo.resetPassword(email)
     }
 
 

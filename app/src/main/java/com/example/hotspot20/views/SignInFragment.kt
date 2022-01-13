@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -23,6 +24,7 @@ class SignInFragment : Fragment() {
     var passwordEdit: EditText? = null
     var loginBtn: Button? = null
     var registerText: TextView? = null
+    var resetPassword: TextView? = null
     var viewModel: AuthViewModel? = null
 
 
@@ -57,6 +59,12 @@ class SignInFragment : Fragment() {
         passwordEdit = view.findViewById(R.id.loginPassword)
         loginBtn = view.findViewById(R.id.loginBtn)
         registerText = view.findViewById(R.id.registerAcc)
+        resetPassword = view.findViewById(R.id.forgotPassword)
+
+        resetPassword!!.setOnClickListener {
+            Navigation.findNavController(requireView())
+                .navigate(R.id.action_signInFragment_to_resetPasswordFragment)
+        }
 
         registerText!!.setOnClickListener {
             Navigation.findNavController(requireView())
@@ -68,8 +76,17 @@ class SignInFragment : Fragment() {
             var password = passwordEdit!!.text.toString().trim()
 
 
-            if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)){
-                viewModel!!.logIn(email,password)
+            if (email.isEmpty()) {
+                emailEdit!!.error = "Please enter email"
+            }
+            if (password.isEmpty()) {
+                passwordEdit!!.error = "Please enter a password"
+            }
+            if (email.isEmpty() && password.isEmpty()) {
+                passwordEdit!!.error = "Please enter a password"
+                emailEdit!!.error = "Please enter email"
+            } else {
+                viewModel!!.logIn(email, password)
                 Navigation.findNavController(requireView())
                     .navigate(R.id.action_signInFragment_to_hotspotFragment)
             }

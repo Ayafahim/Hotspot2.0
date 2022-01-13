@@ -1,21 +1,31 @@
 package com.example.hotspot20.repositories
 
 import android.app.Application
+import android.content.Intent
+import android.net.Uri
 import android.widget.Toast
+import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.Navigation
+import com.example.hotspot20.R
 import com.example.hotspot20.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class AuthRepository(application: Application) {
     private var application: Application = application
-    lateinit var user: User
     var firebaseUserMutableData: MutableLiveData<FirebaseUser> = MutableLiveData()
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
     var userLoggedMutableLiveData: MutableLiveData<Boolean> = MutableLiveData()
     val database = Firebase.database
+    var loginSuccess = false
+    var registerSuccess = false
+    var resetSuccess = false
+    var saveSuccess = false
 
     init {
 
@@ -24,11 +34,13 @@ class AuthRepository(application: Application) {
         }
     }
 
-    public fun saveUser(user: User){
+
+    public fun saveUser(user: User) {
         val ref = database.getReference("users")
         val userId = auth.currentUser!!.uid
-        ref.child(userId).setValue(user).addOnCompleteListener{
+        ref.child(userId).setValue(user).addOnCompleteListener {
             Toast.makeText(application, "Successfull", Toast.LENGTH_SHORT).show()
+            saveSuccess = true
         }
 
     }
@@ -46,8 +58,8 @@ class AuthRepository(application: Application) {
                         application,
                         "You are now registered",
                         Toast.LENGTH_SHORT
-                    )
-                        .show()
+                    ).show()
+                    registerSuccess = true
                 } else {
                     Toast.makeText(
                         application,
@@ -78,6 +90,7 @@ class AuthRepository(application: Application) {
                         Toast.LENGTH_SHORT
                     )
                         .show()
+                    loginSuccess = true
                 } else {
                     Toast.makeText(
                         application,
@@ -86,6 +99,35 @@ class AuthRepository(application: Application) {
                     ).show()
                 }
             }
+    }
+
+    fun resetPassword(email: String) {
+        email.trim()
+        FirebaseAuth.getInstance().sendPasswordResetEmail(email).addOnCompleteListener {
+            if (it.isSuccessful) {
+                Toast.makeText(
+                    application,
+                    "Email to reset your password has been sent",
+                    Toast.LENGTH_SHORT
+                ).show()
+                registerSuccess = true
+            } else {
+                Toast.makeText(
+                    application,
+                    it.exception!!.message.toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+    fun uploadImage(pickedImage: Uri) {
+        var myStorage = FirebaseStorage.getInstance().reference.child("user_photos")
+        var imagePath = myStorage.child(pickedImage.lastPathSegment!!)
+        var userID = auth.currentUser!!.uid
+        imagePath.child(userID).putFile(pickedImage).addOnSuccessListener {
+            Toast.makeText(application, "Picture Uploaded", Toast.LENGTH_SHORT).show()
+        }
+
     }
 }
 
