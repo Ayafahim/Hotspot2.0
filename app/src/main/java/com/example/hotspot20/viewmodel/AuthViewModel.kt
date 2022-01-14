@@ -26,7 +26,6 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
 
     fun saveUser(user: User){
         authRepo.saveUser(user)
-
     }
 
     fun uploadProfilePic(pickedImage: Uri){

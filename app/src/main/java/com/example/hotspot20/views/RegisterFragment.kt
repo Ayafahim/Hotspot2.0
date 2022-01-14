@@ -24,6 +24,7 @@ class RegisterFragment : Fragment() {
     var registerBtn: Button? = null
     var viewModel: AuthViewModel? = null
     var logInText: TextView? = null
+    var succes = false
 
 
     override fun onCreateView(
@@ -71,17 +72,25 @@ class RegisterFragment : Fragment() {
 
             if (email.isEmpty()) {
                 emailEdit!!.error = "Please enter email"
-            }
-            if (password.isEmpty()) {
+            } else if (password.isEmpty()) {
                 passwordEdit!!.error = "Please enter a password"
-            }
-            if (email.isEmpty() && password.isEmpty()) {
+            } else if (email.isEmpty() && password.isEmpty()) {
                 passwordEdit!!.error = "Please enter a password"
                 emailEdit!!.error = "Please enter email"
             } else {
                 viewModel!!.register(email, password)
-                Navigation.findNavController(requireView())
-                    .navigate(R.id.action_registerFragment_to_createProfileFragment)
+
+                viewModel!!.userData.observe(
+                    requireActivity(),
+                    { firebaseUser ->
+                        if (firebaseUser != null) {
+                            succes = true
+                        }
+                    })
+                if (succes) {
+                    Navigation.findNavController(requireView())
+                        .navigate(R.id.action_registerFragment_to_createProfileFragment)
+                }
             }
 
         }
