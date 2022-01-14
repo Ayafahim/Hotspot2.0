@@ -1,28 +1,25 @@
 package com.example.hotspot20.views
 
-import android.R.attr
 import android.app.Activity.RESULT_OK
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
-import android.text.TextUtils
-import androidx.fragment.app.Fragment
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.hotspot20.R
 import com.example.hotspot20.model.User
 import com.example.hotspot20.viewmodel.AuthViewModel
-import android.content.Intent
-import android.net.Uri
-
-import androidx.core.app.ActivityCompat.startActivityForResult
-import android.R.attr.data
-import android.graphics.Bitmap
-import android.provider.MediaStore
+import com.google.firebase.auth.UserProfileChangeRequest
 
 
 class CreateProfileFragment : Fragment() {
@@ -35,6 +32,7 @@ class CreateProfileFragment : Fragment() {
     private var profilePic: ImageView? = null
     private var viewModel: AuthViewModel? = null
     private val SELECT_PICTURE = 200
+    var success = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,12 +80,19 @@ class CreateProfileFragment : Fragment() {
                 bioEdit!!.error = "Please enter a bio"
             } else {
                 viewModel!!.saveUser(User(name, birthday, bio))
-                Navigation.findNavController(requireView())
-                    .navigate(R.id.action_createProfileFragment_to_hotspotFragment)
-
+                viewModel!!.userInfo.observe(
+                    requireActivity(),
+                    { boolean ->
+                        if (boolean) {
+                            success = true
+                        }
+                    })
+                if (success) {
+                    Navigation.findNavController(requireView())
+                        .navigate(R.id.action_createProfileFragment_to_hotspotFragment)
+                }
             }
         }
-
         uploadBtn!!.setOnClickListener {
             imageChooser()
         }
@@ -111,7 +116,7 @@ class CreateProfileFragment : Fragment() {
     // selects the image from the imageChooser
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         if (resultCode === RESULT_OK) {
 
@@ -119,7 +124,13 @@ class CreateProfileFragment : Fragment() {
             // SELECT_PICTURE constant
             if (requestCode === SELECT_PICTURE) {
                 // Get the url of the image from data
-                val selectedImageUri: Uri? = intent!!.data
+                var selectedImageUri: Uri = data!!.data!!
+
+                val bitmap1: Bitmap = BitmapFactory.decodeStream(
+                    requireActivity().contentResolver.openInputStream(selectedImageUri)
+                )
+
+
                 val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(
                     requireActivity().contentResolver, Uri.parse(
                         selectedImageUri.toString()
@@ -128,10 +139,12 @@ class CreateProfileFragment : Fragment() {
                 if (null != selectedImageUri) {
                     // update the preview image in the layout
                     viewModel!!.uploadProfilePic(selectedImageUri)
-
                     //profilePic!!.setImageURI(selectedImageUri)
+
+
                 }
             }
         }
     }
 }
+

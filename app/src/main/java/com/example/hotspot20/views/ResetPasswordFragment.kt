@@ -48,7 +48,8 @@ class ResetPasswordFragment : Fragment() {
 
             if (email.isEmpty()) {
                 emailEdit!!.error = "Please enter email"
-            } else {
+            }
+            else {
                 viewModel!!.resetPassword(email)
                 Navigation.findNavController(requireView())
                     .navigate(R.id.action_resetPasswordFragment_to_signInFragment)

@@ -10,6 +10,7 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
 
     var authRepo = AuthRepository(application)
     var userData = authRepo.firebaseUserMutableData
+    var userInfo = authRepo.userInfoMutableLiveData
     var loggedStatus = authRepo.userLoggedMutableLiveData
 
 

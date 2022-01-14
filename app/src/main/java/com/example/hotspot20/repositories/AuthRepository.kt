@@ -22,11 +22,9 @@ class AuthRepository(application: Application) {
     var firebaseUserMutableData: MutableLiveData<FirebaseUser> = MutableLiveData()
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
     var userLoggedMutableLiveData: MutableLiveData<Boolean> = MutableLiveData()
+    var userInfoMutableLiveData : MutableLiveData<Boolean> = MutableLiveData()
     val database = Firebase.database
-    var loginSuccess = false
-    var registerSuccess = false
-    var resetSuccess = false
-    var saveSuccess = false
+
 
     init {
 
@@ -39,9 +37,18 @@ class AuthRepository(application: Application) {
     public fun saveUser(user: User) {
         val ref = database.getReference("users")
         val userId = auth.currentUser!!.uid
-        ref.child(userId).setValue(user).addOnCompleteListener {
-            Toast.makeText(application, "Successfull", Toast.LENGTH_SHORT).show()
-            saveSuccess = true
+        ref.child(userId).setValue(user).addOnCompleteListener { task ->
+            if(task.isSuccessful){
+                Toast.makeText(application, "Your info has now been added", Toast.LENGTH_SHORT).show()
+                userInfoMutableLiveData.postValue(true)
+            }
+            else{
+                Toast.makeText(
+                    application,
+                    task.exception!!.message.toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
     }
@@ -60,7 +67,6 @@ class AuthRepository(application: Application) {
                         "You are now registered",
                         Toast.LENGTH_SHORT
                     ).show()
-                    registerSuccess = true
                 } else {
                     Toast.makeText(
                         application,
@@ -109,7 +115,6 @@ class AuthRepository(application: Application) {
                     "Email to reset your password has been sent",
                     Toast.LENGTH_SHORT
                 ).show()
-                registerSuccess = true
             } else {
                 Toast.makeText(
                     application,

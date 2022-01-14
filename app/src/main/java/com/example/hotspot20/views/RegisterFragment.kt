@@ -80,7 +80,7 @@ class RegisterFragment : Fragment() {
             } else {
                 viewModel!!.register(email, password)
 
-                viewModel!!.userData.observe(
+                /*viewModel!!.userData.observe(
                     requireActivity(),
                     { firebaseUser ->
                         if (firebaseUser != null) {
@@ -90,8 +90,11 @@ class RegisterFragment : Fragment() {
                 if (succes) {
                     Navigation.findNavController(requireView())
                         .navigate(R.id.action_registerFragment_to_createProfileFragment)
-                }
+                }*/
+                Navigation.findNavController(requireView())
+                    .navigate(R.id.action_registerFragment_to_createProfileFragment)
             }
+
 
         }
     }
