@@ -1,4 +1,4 @@
-package com.example.hotspot20.adapters
+package com.example.hotspot20.model
 
 import java.io.Serializable
 
