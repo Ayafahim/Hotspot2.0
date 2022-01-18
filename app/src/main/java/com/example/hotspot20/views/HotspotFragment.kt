@@ -2,13 +2,17 @@ package com.example.hotspot20.views
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
+import androidx.cardview.widget.CardView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.example.hotspot20.R
 import com.example.hotspot20.model.Hotspot
@@ -19,17 +23,22 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.maps.android.SphericalUtil
 import com.vmadalin.easypermissions.EasyPermissions
 import com.vmadalin.easypermissions.dialogs.SettingsDialog
 
 class HotspotFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     val TAG = "HotspotFragment"
+    val locationRequest = LocationRequest().setInterval(2000).setFastestInterval(2000)
+        .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var userLat = 0.0
     private var userLong = 0.0
+    private var locationAccessed = false
     private lateinit var userLoc: LatLng
+    private lateinit var checkInBtn: Button
 
     companion object {
         const val PERMISSION_LOCATION_REQUEST_CODE = 1
@@ -46,6 +55,9 @@ class HotspotFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     ): View? {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_hotspot, container, false)
+
+        checkInBtn = view.findViewById<Button>(R.id.button2)
+
         val mapFragment =
             childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
         mapFragment.getMapAsync { googleMap ->
@@ -95,7 +107,11 @@ class HotspotFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
              */
             zoomToCurrentLocation()
+            checkIn()
             //mapReady = true
+            checkInBtn.setOnClickListener{
+                println("halloo")
+            }
         }
         return view
     }
@@ -122,9 +138,48 @@ class HotspotFragment : Fragment(), EasyPermissions.PermissionCallbacks {
      */
 
     @SuppressLint("MissingPermission")
+    private fun checkIn() {
+        lateinit var currentLocation: LatLng
+        if (hasLocationPermission()) {
+            fusedLocationProviderClient.requestLocationUpdates(
+                locationRequest,
+                object : LocationCallback() {
+                    @SuppressLint("ResourceAsColor")
+                    override fun onLocationResult(locationResult: LocationResult) {
+                        super.onLocationResult(locationResult)
+                        for (location in locationResult.locations) {
+                            getLocationAccess()
+                            currentLocation = LatLng(location.latitude, location.longitude)
+                        }
+                        db.collection("hotspots").addSnapshotListener { result, e ->
+                            if (e != null) {
+                                Log.w(TAG, "listen failed", e)
+                                return@addSnapshotListener
+                            }
+                            for (hotspot in arHotspots) {
+                                val geoPosition = LatLng(hotspot.latitude, hotspot.longitude)
+                                var distance = SphericalUtil.computeDistanceBetween(geoPosition, currentLocation)
+                                if (distance < 100.0){
+                                    checkInBtn.setBackgroundColor(R.color.blue)
+                                    checkInBtn.setClickable(true)
+                                    println(hotspot.name +" "+ distance)
+                                    break
+                                }
+                                if (distance > 100.0){
+                                    checkInBtn.setBackgroundColor(R.color.white)
+                                    checkInBtn.setClickable(false)
+                                }
+                            }
+                        }
+                    }
+                },
+                Looper.getMainLooper()
+            )
+        }
+    }
+
+    @SuppressLint("MissingPermission")
     private fun zoomToCurrentLocation() {
-        val locationRequest = LocationRequest().setInterval(2000).setFastestInterval(2000)
-            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
         if (hasLocationPermission()) {
             fusedLocationProviderClient.requestLocationUpdates(
                 locationRequest,
@@ -136,7 +191,8 @@ class HotspotFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                             userLat = location.latitude
                             userLong = location.longitude
                             userLoc = LatLng(location.latitude, location.longitude)
-                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLoc, 13F))
+                            //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLoc, 13F))
+                            locationAccessed = true
                         }
                     }
                 },
