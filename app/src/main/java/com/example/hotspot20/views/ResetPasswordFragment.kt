@@ -42,27 +42,24 @@ class ResetPasswordFragment : Fragment() {
         emailEdit = view.findViewById(R.id.resetEmail)
         submitBtn = view.findViewById(R.id.submit)
         registerText = view.findViewById(R.id.registerAcc)
-        var email = emailEdit!!.text.toString().trim()
 
-        submitBtn!!.setOnClickListener {
-
-            if (email.isEmpty()) {
-                emailEdit!!.error = "Please enter email"
-            }
-            else {
-                viewModel!!.resetPassword(email)
-                Navigation.findNavController(requireView())
-                    .navigate(R.id.action_resetPasswordFragment_to_signInFragment)
-
-            }
-        }
 
         registerText!!.setOnClickListener {
             Navigation.findNavController(requireView())
                 .navigate(R.id.action_resetPasswordFragment_to_registerFragment)
         }
 
+        submitBtn!!.setOnClickListener {
+            var email = emailEdit!!.text.toString().trim()
+
+            if (email.isEmpty()) {
+                emailEdit!!.error = "Please enter email"
+            } else {
+                viewModel!!.resetPassword(email)
+                Navigation.findNavController(requireView())
+                    .navigate(R.id.action_resetPasswordFragment_to_signInFragment)
+            }
+        }
+
     }
-
-
 }

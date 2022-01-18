@@ -69,7 +69,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/profilePic"
         android:layout_width="150dp"
         android:layout_height="108dp"
         android:layout_marginStart="128dp"
@@ -134,5 +134,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+        app:layout_constraintTop_toBottomOf="@+id/profilePic" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,8 +2,11 @@ package com.example.hotspot20.views
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.content.Intent.getIntent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Picture
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -31,8 +34,7 @@ class CreateProfileFragment : Fragment() {
     private var uploadBtn: Button? = null
     private var profilePic: ImageView? = null
     private var viewModel: AuthViewModel? = null
-    private val SELECT_PICTURE = 200
-    var success = false
+    private val SELECT_PICTURE = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +50,7 @@ class CreateProfileFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_create_profile, container, false)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,7 +61,8 @@ class CreateProfileFragment : Fragment() {
         createBtn = view.findViewById(R.id.createProfileBtn)
         uploadBtn = view.findViewById(R.id.uploadPicBtn)
         bioEdit = view.findViewById(R.id.createBio)
-        profilePic = view.findViewById(R.id.profilepic)
+        profilePic = view.findViewById(R.id.profilePic)
+
 
         createBtn!!.setOnClickListener {
             var birthday = dateOfBirthEdit!!.text.toString()
@@ -67,14 +71,11 @@ class CreateProfileFragment : Fragment() {
 
             if (birthday.isEmpty()) {
                 dateOfBirthEdit!!.error = "Please enter your birthday"
-            }
-            if (name.isEmpty()) {
+            } else if (name.isEmpty()) {
                 nameEdit!!.error = "Please enter name"
-            }
-            if (bio.isEmpty()) {
+            } else if (bio.isEmpty()) {
                 bioEdit!!.error = "Please enter a bio"
-            }
-            if (bio.isEmpty() && name.isEmpty() && birthday.isEmpty()) {
+            } else if (birthday.isEmpty() && name.isEmpty() && bio.isEmpty()) {
                 dateOfBirthEdit!!.error = "Please enter your birthday"
                 nameEdit!!.error = "Please enter name"
                 bioEdit!!.error = "Please enter a bio"
@@ -84,15 +85,14 @@ class CreateProfileFragment : Fragment() {
                     requireActivity(),
                     { boolean ->
                         if (boolean) {
-                            success = true
+                            Navigation.findNavController(requireView())
+                                .navigate(R.id.action_createProfileFragment_to_hotspotFragment)
                         }
-                    })
-                if (success) {
-                    Navigation.findNavController(requireView())
-                        .navigate(R.id.action_createProfileFragment_to_hotspotFragment)
-                }
+                    }
+                )
             }
         }
+
         uploadBtn!!.setOnClickListener {
             imageChooser()
         }
@@ -102,47 +102,30 @@ class CreateProfileFragment : Fragment() {
 
         // create an instance of the
         // intent of the type image
-        val i = Intent()
+        val i = Intent(Intent.ACTION_GET_CONTENT)
         i.type = "image/*"
-        i.action = Intent.ACTION_GET_CONTENT
+        val pickIntent =
+            Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        pickIntent.type = "image/*"
+        val chooserIntent = Intent.createChooser(i, "Pick Image")
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, pickIntent)
+        startActivityForResult(chooserIntent, SELECT_PICTURE)
 
-        // pass the constant to compare it
-        // with the returned requestCode
-
-        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE)
     }
 
     // this function is triggered when user
     // selects the image from the imageChooser
-
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        if (resultCode === RESULT_OK) {
-
+        if (requestCode === SELECT_PICTURE) {
             // compare the resultCode with the
             // SELECT_PICTURE constant
-            if (requestCode === SELECT_PICTURE) {
+            if (resultCode == RESULT_OK) {
                 // Get the url of the image from data
-                var selectedImageUri: Uri = data!!.data!!
+                var uri = data!!.data
 
-                val bitmap1: Bitmap = BitmapFactory.decodeStream(
-                    requireActivity().contentResolver.openInputStream(selectedImageUri)
-                )
-
-
-                val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(
-                    requireActivity().contentResolver, Uri.parse(
-                        selectedImageUri.toString()
-                    )
-                )
-                if (null != selectedImageUri) {
-                    // update the preview image in the layout
-                    viewModel!!.uploadProfilePic(selectedImageUri)
-                    //profilePic!!.setImageURI(selectedImageUri)
-
-
-                }
+                profilePic!!.setImageURI(uri)
+                viewModel!!.uploadProfilePic(uri!!)
             }
         }
     }

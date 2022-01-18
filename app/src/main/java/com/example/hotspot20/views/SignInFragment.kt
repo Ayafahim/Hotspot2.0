@@ -73,30 +73,25 @@ class SignInFragment : Fragment() {
         loginBtn!!.setOnClickListener {
             var email = emailEdit!!.text.toString().trim()
             var password = passwordEdit!!.text.toString().trim()
-            var succes = false
 
             if (email.isEmpty()) {
                 emailEdit!!.error = "Please enter email"
-            }
-            else if (password.isEmpty()) {
+            } else if (password.isEmpty()) {
                 passwordEdit!!.error = "Please enter a password"
-            }
-            else if (email.isEmpty() && password.isEmpty()) {
+            } else if (email.isEmpty() && password.isEmpty()) {
                 passwordEdit!!.error = "Please enter a password"
                 emailEdit!!.error = "Please enter email"
             } else {
-                viewModel!!.logIn(email,password)
+                viewModel!!.logIn(email, password)
                 viewModel!!.userData.observe(
                     requireActivity(),
                     { firebaseUser ->
                         if (firebaseUser != null) {
-                            succes = true
+                            Navigation.findNavController(requireView())
+                                .navigate(R.id.action_signInFragment_to_hotspotFragment)
                         }
-                    })
-                if (succes){
-                    Navigation.findNavController(requireView())
-                        .navigate(R.id.action_signInFragment_to_hotspotFragment)
-                }
+                    }
+                )
             }
         }
     }
