@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import com.example.hotspot20.R
 import com.example.hotspot20.model.Hotspot
 import com.google.android.gms.location.*
-import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
