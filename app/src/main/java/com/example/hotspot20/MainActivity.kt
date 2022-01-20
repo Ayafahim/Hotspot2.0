@@ -7,6 +7,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import com.example.hotspot20.views.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 

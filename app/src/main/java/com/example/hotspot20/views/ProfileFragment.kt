@@ -36,12 +36,14 @@ class ProfileFragment : Fragment() {
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
     val database = Firebase.database
     val ref = database.getReference("users")
-    private val SELECT_PICTURE = 1
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
         nameView = view.findViewById(R.id.nameView)
@@ -90,6 +92,8 @@ class ProfileFragment : Fragment() {
                 Log.w(ContentValues.TAG, "Failed to read value.", error.toException())
             }
         })
+
+
     }
 
 

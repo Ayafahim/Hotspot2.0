@@ -18,7 +18,7 @@
         android:layout_height="match_parent"
         android:fillViewport="true"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-44dp">
+        tools:layout_editor_absoluteY="-80dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -29,17 +29,18 @@
                 android:layout_width="218dp"
                 android:layout_height="71dp"
                 android:layout_marginStart="97dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="200dp"
                 android:layout_marginEnd="97dp"
                 android:fontFamily="sans-serif-light"
                 android:text="Login"
                 android:textAlignment="center"
-                android:textAllCaps="true"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="40sp"
+                android:textSize="34sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/loginEmail"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="172dp"
+                android:layout_marginTop="252dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/login_background"
                 android:ems="10"
@@ -58,7 +59,7 @@
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="52dp"
+                android:layout_marginTop="44dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/login_background"
                 android:ems="10"
@@ -78,7 +79,7 @@
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginEmail" />
 
@@ -87,7 +88,7 @@
                 android:layout_width="158dp"
                 android:layout_height="38dp"
                 android:layout_marginStart="235dp"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="18dp"
                 android:layout_marginEnd="18dp"
                 android:clickable="true"
                 android:foreground="?selectableItemBackground"
@@ -106,7 +107,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="68dp"
+                android:layout_marginTop="72dp"
                 android:layout_marginEnd="20dp"
                 android:foreground="?selectableItemBackground"
                 android:text="Login"
@@ -114,7 +115,7 @@
                 android:textSize="16dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/forgotPassword" />
 
@@ -123,7 +124,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="173dp"
-                android:layout_marginTop="84dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="173dp"
                 android:clickable="true"
                 android:foreground="?selectableItemBackground"
@@ -136,6 +137,18 @@
                 app:layout_constraintHorizontal_bias="0.505"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="411dp"
+                android:layout_height="105dp"
+                android:layout_marginTop="62dp"
+                android:layout_marginBottom="33dp"
+                android:src="@drawable/logo_payoff"
+                app:layout_constraintBottom_toTopOf="@+id/loginTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
