@@ -1,16 +1,16 @@
 package com.example.hotspot20.views
 
-import android.app.Activity.RESULT_OK
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.hotspot20.R
@@ -18,19 +18,19 @@ import com.example.hotspot20.model.User
 import com.example.hotspot20.viewmodel.AuthViewModel
 
 
-class CreateProfileFragment : Fragment() {
-
-    private var nameEdit: EditText? = null
-    private var dateOfBirthEdit: EditText? = null
-    private var bioEdit: EditText? = null
-    private var createBtn: Button? = null
-    private var uploadBtn: Button? = null
-    private var profilePic: ImageView? = null
-    private var viewModel: AuthViewModel? = null
+class EditProfileFragment : Fragment() {
+    var editBtn: Button? = null
+    var nameEdit: EditText? = null
+    var bioEdit: EditText? = null
+    var birthdayEdit: EditText? = null
+    var viewModel: AuthViewModel? = null
+    var uploadBtn: Button? = null
+    var profilePic: ImageView? = null
     private val SELECT_PICTURE = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         viewModel = ViewModelProvider(
             this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(requireActivity().application)
@@ -42,52 +42,44 @@ class CreateProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_profile, container, false)
-
+        return inflater.inflate(R.layout.fragment_edit_profile, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        nameEdit = view.findViewById(R.id.EditName)
-        dateOfBirthEdit = view.findViewById(R.id.Editbirthday)
-        createBtn = view.findViewById(R.id.editProfileBtn)
-        uploadBtn = view.findViewById(R.id.uploadNewPicBtn)
+        editBtn = view.findViewById(R.id.editProfileBtn)
         bioEdit = view.findViewById(R.id.EditBio)
+        birthdayEdit = view.findViewById(R.id.Editbirthday)
+        nameEdit = view.findViewById(R.id.EditName)
+        uploadBtn = view.findViewById(R.id.uploadNewPicBtn)
         profilePic = view.findViewById(R.id.profilePicEdit)
 
+        uploadBtn!!.setOnClickListener {
+            imageChooser()
+        }
 
-        createBtn!!.setOnClickListener {
-            var birthday = dateOfBirthEdit!!.text.toString()
+        editBtn!!.setOnClickListener {
+
+            var birthday = birthdayEdit!!.text.toString()
             var name = nameEdit!!.text.toString()
             var bio = bioEdit!!.text.toString()
-
             if (birthday.isEmpty()) {
-                dateOfBirthEdit!!.error = "Please enter your birthday"
+                birthdayEdit!!.error = "Please enter your birthday"
             } else if (name.isEmpty()) {
                 nameEdit!!.error = "Please enter name"
             } else if (bio.isEmpty()) {
                 bioEdit!!.error = "Please enter a bio"
             } else if (birthday.isEmpty() && name.isEmpty() && bio.isEmpty()) {
-                dateOfBirthEdit!!.error = "Please enter your birthday"
+                birthdayEdit!!.error = "Please enter your birthday"
                 nameEdit!!.error = "Please enter name"
                 bioEdit!!.error = "Please enter a bio"
             } else {
-                viewModel!!.saveUser(User(name, birthday, bio))
-                viewModel!!.userInfo.observe(
-                    requireActivity(),
-                    { boolean ->
-                        if (boolean) {
-                            Navigation.findNavController(requireView())
-                                .navigate(R.id.action_createProfileFragment_to_hotspotFragment)
-                        }
-                    }
-                )
+                viewModel!!.updateUser(User(name, birthday, bio))
+                Navigation.findNavController(requireView())
+                    .navigate(R.id.action_editProfileFragment_to_profileFragment)
             }
-        }
 
-        uploadBtn!!.setOnClickListener {
-            imageChooser()
         }
     }
 
@@ -113,7 +105,7 @@ class CreateProfileFragment : Fragment() {
         if (requestCode === SELECT_PICTURE) {
             // compare the resultCode with the
             // SELECT_PICTURE constant
-            if (resultCode == RESULT_OK) {
+            if (resultCode == Activity.RESULT_OK) {
                 // Get the url of the image from data
                 var uri = data!!.data
 
@@ -123,4 +115,3 @@ class CreateProfileFragment : Fragment() {
         }
     }
 }
-

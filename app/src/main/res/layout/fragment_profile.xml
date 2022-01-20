@@ -15,15 +15,17 @@
         android:layout_height="match_parent"
         tools:context=".views.ProfileFragment">
 
-    <ImageView
-        android:id="@+id/imageView"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profilePicp"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:foreground="@drawable/ic_baseline_android_24"/>
+        android:src="@drawable/profile_pic"
+        app:civ_border_color="@color/black"
+        app:civ_border_width="3dp"/>
 
     <TextView
         android:id="@+id/nameView"
@@ -32,13 +34,14 @@
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="Emin, 20"
+        android:textColor = "@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/profilePicp" />
 
     <TextView
-        android:id="@+id/cityView"
+        android:id="@+id/birthdayView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -79,7 +82,8 @@
             android:layout_height="match_parent"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="0dp"
-            android:foreground="@drawable/city2jpg" />
+            android:clickable = "true"
+            android:src="@drawable/ic_baseline_android_24" />
 
     </androidx.cardview.widget.CardView>
 
@@ -98,7 +102,8 @@
             android:layout_height="match_parent"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="0dp"
-            android:foreground="@drawable/city2jpg" />
+            android:clickable = "true"
+            android:src="@drawable/ic_baseline_android_24" />
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -116,9 +121,9 @@
             android:layout_height="match_parent"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="0dp"
-            android:foreground="@drawable/city2jpg"
             android:scaleType="centerCrop"
-            tools:src="@tools:sample/avatars" />
+            android:clickable = "true"
+            android:src="@drawable/ic_baseline_android_24" />
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -140,9 +145,9 @@
             android:layout_height="match_parent"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
-            android:foreground="@drawable/city2jpg"
-            android:scaleType="centerCrop"
-            tools:src="@tools:sample/avatars" />
+            android:clickable = "true"
+            android:src="@drawable/ic_baseline_android_24"
+            android:scaleType="centerCrop" />
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -164,9 +169,9 @@
             android:layout_height="match_parent"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="0dp"
-            android:foreground="@drawable/city2jpg"
             android:scaleType="centerCrop"
-            tools:src="@tools:sample/avatars" />
+            android:clickable = "true"
+            android:src="@drawable/ic_baseline_android_24" />
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -188,8 +193,8 @@
             android:layout_height="match_parent"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="0dp"
-            android:foreground="@drawable/city2jpg"
-            tools:src="@tools:sample/avatars" />
+            android:clickable = "true"
+            android:src="@drawable/ic_baseline_android_24" />
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -203,7 +208,7 @@
         app:layout_constraintEnd_toEndOf="@+id/cardView4"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/cardView6"
-        app:layout_constraintTop_toBottomOf="@+id/cityView">
+        app:layout_constraintTop_toBottomOf="@+id/birthdayView">
 
         <LinearLayout
             android:layout_width="wrap_content"

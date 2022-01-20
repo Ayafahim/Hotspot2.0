@@ -23,18 +23,17 @@ class AuthRepository(application: Application) {
     var userLoggedMutableLiveData: MutableLiveData<Boolean> = MutableLiveData()
     var userInfoMutableLiveData: MutableLiveData<Boolean> = MutableLiveData()
     val database = Firebase.database
+    val ref = database.getReference("users")
+    var uri: Uri? = null
 
 
     init {
-
         if (auth.currentUser != null) {
             firebaseUserMutableData.postValue((auth.currentUser))
         }
     }
 
-
     fun saveUser(user: User) {
-        val ref = database.getReference("users")
         val userId = auth.currentUser!!.uid
         ref.child(userId).setValue(user).addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -49,8 +48,20 @@ class AuthRepository(application: Application) {
                 ).show()
             }
         }
-
     }
+
+    fun updateUser(user: User){
+        val userId = auth.currentUser!!.uid
+        val nUser = mapOf<String,String>(
+            "name" to user.name,
+            "dateOfBirth" to user.dateOfBirth,
+            "bio" to user.bio
+        )
+        ref.child(userId).updateChildren(nUser).addOnSuccessListener {
+            Toast.makeText(application, "Your info has been updated", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
     fun register(email: String, password: String) {
         email.trim()
@@ -74,7 +85,6 @@ class AuthRepository(application: Application) {
                 }
             }
     }
-
 
     fun logOut() {
         auth.signOut()
@@ -123,20 +133,17 @@ class AuthRepository(application: Application) {
         }
     }
 
+
     fun uploadImage(pickedImage: Uri) {
-
-
         var userID = auth.currentUser!!.uid
         var myStorage = FirebaseStorage.getInstance().reference.child("profile_pics")
-
         var imagePath = myStorage.child("$userID.jpeg")
 
         imagePath.putFile(pickedImage).addOnSuccessListener {
             getDownloadUrl(imagePath)
         }
-
-
     }
+
 
     private fun getDownloadUrl(storageReference: StorageReference) {
         storageReference.downloadUrl.addOnSuccessListener(OnSuccessListener {
@@ -153,8 +160,12 @@ class AuthRepository(application: Application) {
             Toast.makeText(application, "Picture Uploaded", Toast.LENGTH_SHORT).show()
         }
     }
-
 }
+
+
+
+
+
 
 
 

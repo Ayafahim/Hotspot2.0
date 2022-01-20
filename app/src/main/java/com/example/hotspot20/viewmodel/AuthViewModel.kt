@@ -14,27 +14,31 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
     var loggedStatus = authRepo.userLoggedMutableLiveData
 
 
-    fun register(email: String,password : String){
-        authRepo.register(email,password)
+    fun register(email: String, password: String) {
+        authRepo.register(email, password)
     }
-    fun logIn(email: String,password: String){
-        authRepo.logIn(email,password)
 
+    fun logIn(email: String, password: String) {
+        authRepo.logIn(email, password)
     }
-    fun logOut(){
+
+    fun logOut() {
         authRepo.logOut()
     }
 
-    fun saveUser(user: User){
+    fun saveUser(user: User) {
         authRepo.saveUser(user)
     }
 
-    fun uploadProfilePic(pickedImage: Uri){
+    fun updateUser(user: User){
+        authRepo.updateUser(user)
+    }
+
+    fun uploadProfilePic(pickedImage: Uri) {
         authRepo.uploadImage(pickedImage)
     }
-    fun resetPassword(email: String){
+
+    fun resetPassword(email: String) {
         authRepo.resetPassword(email)
     }
-
-
 }
