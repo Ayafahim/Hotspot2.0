@@ -30,7 +30,7 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
         authRepo.saveUser(user)
     }
 
-    fun updateUser(user: User){
+    fun updateUser(user: User) {
         authRepo.updateUser(user)
     }
 

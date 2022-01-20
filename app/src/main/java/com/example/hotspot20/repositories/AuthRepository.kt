@@ -24,7 +24,8 @@ class AuthRepository(application: Application) {
     var userInfoMutableLiveData: MutableLiveData<Boolean> = MutableLiveData()
     val database = Firebase.database
     val ref = database.getReference("users")
-    var uri: Uri? = null
+
+
 
 
     init {
@@ -50,9 +51,9 @@ class AuthRepository(application: Application) {
         }
     }
 
-    fun updateUser(user: User){
+    fun updateUser(user: User) {
         val userId = auth.currentUser!!.uid
-        val nUser = mapOf<String,String>(
+        val nUser = mapOf<String, String>(
             "name" to user.name,
             "dateOfBirth" to user.dateOfBirth,
             "bio" to user.bio
@@ -132,7 +133,6 @@ class AuthRepository(application: Application) {
             }
         }
     }
-
 
     fun uploadImage(pickedImage: Uri) {
         var userID = auth.currentUser!!.uid

@@ -1,21 +1,17 @@
 package com.example.hotspot20.views
 
 import android.os.Bundle
-import android.text.TextUtils
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.hotspot20.R
 import com.example.hotspot20.viewmodel.AuthViewModel
-import com.google.firebase.auth.FirebaseUser
 
 
 class SignInFragment : Fragment() {
@@ -87,8 +83,10 @@ class SignInFragment : Fragment() {
                     requireActivity(),
                     { firebaseUser ->
                         if (firebaseUser != null) {
-                            Navigation.findNavController(requireView())
-                                .navigate(R.id.action_signInFragment_to_hotspotFragment)
+                            if(Navigation.findNavController(requireView()).currentDestination?.id == R.id.signInFragment) {
+                                Navigation.findNavController(requireView())
+                                    .navigate(R.id.action_signInFragment_to_hotspotFragment)
+                            }
                         }
                     }
                 )
