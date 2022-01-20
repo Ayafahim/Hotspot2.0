@@ -84,8 +84,10 @@ class RegisterFragment : Fragment() {
                     requireActivity(),
                     { firebaseUser ->
                         if (firebaseUser != null) {
-                            Navigation.findNavController(requireView())
-                                .navigate(R.id.action_registerFragment_to_createProfileFragment)
+                            if(Navigation.findNavController(requireView()).currentDestination?.id == R.id.registerFragment) {
+                                Navigation.findNavController(requireView())
+                                    .navigate(R.id.action_registerFragment_to_createProfileFragment)
+                            }
                         }
                     })
             }
