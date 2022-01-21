@@ -42,14 +42,13 @@ class RegisterFragment : Fragment() {
             this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(requireActivity().application)
         )[AuthViewModel::class.java]
-        viewModel!!.userData.observe(this, object : Observer<FirebaseUser> {
-            override fun onChanged(firebaseUser: FirebaseUser) {
+       /* viewModel!!.userData.observe(this,
+            { firebaseUser ->
                 if (firebaseUser != null) {
                     Navigation.findNavController(requireView())
                         .navigate(R.id.action_registerFragment_to_signInFragment)
                 }
-            }
-        })
+            })*/
     }
 
 
@@ -79,20 +78,16 @@ class RegisterFragment : Fragment() {
                 emailEdit!!.error = "Please enter email"
             } else {
                 viewModel!!.register(email, password)
-
-                viewModel!!.userData.observe(
-                    requireActivity(),
+                viewModel!!.userData.observe(requireActivity(),
                     { firebaseUser ->
                         if (firebaseUser != null) {
-                            if(Navigation.findNavController(requireView()).currentDestination?.id == R.id.registerFragment) {
+                            if (Navigation.findNavController(requireView()).currentDestination?.id == R.id.registerFragment) {
                                 Navigation.findNavController(requireView())
                                     .navigate(R.id.action_registerFragment_to_createProfileFragment)
                             }
                         }
                     })
             }
-
-
         }
     }
 }
