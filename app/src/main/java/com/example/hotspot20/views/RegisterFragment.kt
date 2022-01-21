@@ -42,13 +42,6 @@ class RegisterFragment : Fragment() {
             this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(requireActivity().application)
         )[AuthViewModel::class.java]
-       /* viewModel!!.userData.observe(this,
-            { firebaseUser ->
-                if (firebaseUser != null) {
-                    Navigation.findNavController(requireView())
-                        .navigate(R.id.action_registerFragment_to_signInFragment)
-                }
-            })*/
     }
 
 
